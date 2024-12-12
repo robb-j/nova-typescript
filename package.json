@@ -1,0 +1,25 @@
+{
+	"name": "nova-typescript",
+	"private": true,
+	"scripts": {
+		"format": "prettier --write '**/*.{js,ts,tsx,json,css,md}'"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"devDependencies": {
+		"@types/nova-editor-node": "^5.1.4",
+		"husky": "^9.1.7",
+		"lint-staged": "^15.2.11",
+		"prettier": "^3.4.2",
+		"typescript": "^5.7.2",
+		"vscode-languageserver-protocol": "^3.17.5"
+	},
+	"prettier": {},
+	"lint-staged": {
+		"*.{js,ts,tsx,json,css,md}": [
+			"prettier --write"
+		]
+	}
+}

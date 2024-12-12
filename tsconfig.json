@@ -1,0 +1,28 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"display": "Nova",
+
+	"compilerOptions": {
+		"outDir": "TypeScript.novaextension/Scripts",
+		"target": "es6",
+		"module": "CommonJS",
+		"moduleResolution": "Node",
+		"newLine": "lf",
+		"stripInternal": true,
+		"strict": true,
+		"noEmitOnError": true,
+		"useDefineForClassFields": true,
+		"skipLibCheck": true,
+
+		"noImplicitReturns": true,
+		"noImplicitOverride": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedIndexedAccess": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUncheckedSideEffectImports": true,
+		"forceConsistentCasingInFileNames": true
+	},
+	"include": ["source"]
+}

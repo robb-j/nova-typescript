@@ -1,0 +1,103 @@
+{
+	"identifier": "robb-j.typescript",
+	"name": "TypeScript",
+	"organization": "robb-j",
+	"description": "JavaScript & TypeScript validation for Nova",
+	"version": "0.0.0",
+	"categories": ["completions", "languages", "issues"],
+	"license": "MIT",
+	"repository": "https://github.com/robb-j/nova-typescript",
+	"bugs": "https://github.com/robb-j/nova-typescript/issues",
+
+	"main": "main.js",
+
+	"activationEvents": [
+		"onLanguage:typescript",
+		"onLanguage:tsx",
+		"onLanguage:javascript",
+		"onLanguage:jsx",
+		"onWorkspaceContains:tsconfig.json",
+		"onWorkspaceContains:jsconfig.json"
+	],
+
+	"entitlements": {
+		"process": true,
+		"requests": true,
+		"filesystem": "readwrite"
+	},
+
+	"commands": {
+		"editor": [
+			{
+				"command": "robb-j.typescript.organiseImports",
+				"title": "Organise Imports",
+				"when": "enabled"
+			},
+			{
+				"command": "robb-j.typescript.rename",
+				"title": "Rename symbol",
+				"when": "enabled"
+			}
+		],
+		"extensions": [
+			{
+				"command": "robb-j.typescript.init",
+				"title": "Initialize TypeScript",
+				"when": "!enabled"
+			},
+			{
+				"command": "robb-j.typescript.restart",
+				"title": "Restart TypeScript",
+				"when": "enabled"
+			}
+		]
+	},
+
+	"config": [],
+	"configWorkspace": [
+		{
+			"key": "robb-j.typescript.enabled",
+			"title": "Enabled",
+			"type": "boolean",
+			"description": "Toggle TypeScript for this workspace"
+		}
+	],
+
+	"taskTemplates": {
+		"tsc": {
+			"name": "TypeScript",
+			"description": "Build TypeScript source code",
+			"persistent": true,
+			"tasks": {
+				"build": {
+					"shell": true,
+					"command": "npx",
+					"args": ["tsc"],
+					"matchers": ["tsc-issue"],
+					"resolve": "tsc-build"
+				},
+				"run": {
+					"shell": true,
+					"command": "npx",
+					"args": ["tsc", "--watch"],
+					"matchers": ["tsc-issue"],
+					"resolve": "tsc-watch"
+				}
+			}
+		}
+	},
+
+	"issueMatchers": {
+		"tsc-issue": {
+			"pattern": {
+				"regexp": "^(.+?)\\((\\d)+,(\\d+)\\):\\s+(\\w+?)\\s+(\\w+):\\s+(.+?)$",
+				"message": 6,
+				"code": 5,
+				"file": 1,
+				"line": 2,
+				"column": 3,
+				"severity": 4
+			}
+		}
+	}
+}
