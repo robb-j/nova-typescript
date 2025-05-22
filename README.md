@@ -7,3 +7,8 @@ I tried to simplify it to a "core" and modernise bits that were using older APIs
 There is no guarantee I'll work on this any more, publish or support it.
 
 [Official TypeScript LSP issue](https://github.com/microsoft/TypeScript/issues/39459)
+
+**experimental ts-go**
+
+I wanted to have a try with the new go-based TypeScript lsp, the only "documentation" I found was the open-source vs-code client which calls the tsgo binary with `--lsp`, [code](https://github.com/microsoft/typescript-go/blob/f6f7e665c9960411b19391d6c0ba7ac37e65c195/_extension/src/client.ts#L101).
+To try it, clone this repo, open it in nova, run the build and turn on "ts go" in the extension settings.
