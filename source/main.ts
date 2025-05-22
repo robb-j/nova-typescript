@@ -18,6 +18,11 @@ export function activate() {
 		if (value && !server.isRunning) server.start();
 		if (!value && server.isRunning) server.stop();
 	});
+
+	nova.config.observe("robb-j.typescript.tsgo", () => {
+		debug("@change tsgo");
+		nova.commands.invoke("robb-j.typescript.restart");
+	});
 }
 
 export function deactivate() {
@@ -115,5 +120,5 @@ nova.commands.register("robb-j.typescript.clean", async () => {
 
 nova.assistants.registerTaskAssistant(new TypeScriptTasks(), {
 	identifier: "robb-j.typescript",
-	name: "Compile",
+	name: "TypeScript",
 });

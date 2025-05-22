@@ -9,6 +9,7 @@
 	"license": "ISC",
 	"description": "",
 	"devDependencies": {
+		"@types/nova-editor": "^1.0.3",
 		"@types/nova-editor-node": "^5.1.4",
 		"husky": "^9.1.7",
 		"lint-staged": "^15.2.11",

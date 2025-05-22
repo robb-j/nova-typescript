@@ -53,7 +53,15 @@
 		]
 	},
 
-	"config": [],
+	"config": [
+		{
+			"key": "robb-j.typescript.tsgo",
+			"title": "[experimental] use ts-go preview",
+			"type": "boolean",
+			"description": "I don't really know what this is doing, I wanted to try it out",
+			"link": "https://devblogs.microsoft.com/typescript/typescript-native-port/"
+		}
+	],
 	"configWorkspace": [
 		{
 			"key": "robb-j.typescript.enabled",
@@ -62,30 +70,6 @@
 			"description": "Toggle TypeScript for this workspace"
 		}
 	],
-
-	"taskTemplates": {
-		"tsc": {
-			"name": "TypeScript",
-			"description": "Build TypeScript source code",
-			"persistent": true,
-			"tasks": {
-				"build": {
-					"shell": true,
-					"command": "npx",
-					"args": ["tsc"],
-					"matchers": ["tsc-issue"],
-					"resolve": "tsc-build"
-				},
-				"run": {
-					"shell": true,
-					"command": "npx",
-					"args": ["tsc", "--watch"],
-					"matchers": ["tsc-issue"],
-					"resolve": "tsc-watch"
-				}
-			}
-		}
-	},
 
 	"issueMatchers": {
 		"tsc-issue": {

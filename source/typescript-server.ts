@@ -11,9 +11,6 @@ const debug = createDebug("language-server");
 
 const DEBUG_INSPECT = nova.inDevMode() && false;
 
-// Log stdin and stdout of the server to local files
-const DEBUG_LOGS = nova.inDevMode() && false;
-
 export class TypeScriptServer {
 	client?: LanguageClient;
 
@@ -39,11 +36,7 @@ export class TypeScriptServer {
 			const installed = await this.install(packageDir);
 			if (!installed) return;
 
-			const serverOptions = this.getServerOptions(
-				nodePath,
-				packageDir,
-				DEBUG_LOGS ? nova.workspace.path : null,
-			);
+			const serverOptions = this.getServerOptions(nodePath, packageDir);
 			const clientOptions = {
 				syntaxes: ["typescript", "tsx", "cts", "mts", "javascript", "jsx"],
 			};
@@ -143,41 +136,32 @@ export class TypeScriptServer {
 		return null;
 	}
 
-	getServerOptions(
-		nodePath: string,
-		packageDir: string,
-		debugPath: string | null,
-	): ServerOptions {
-		// const nodeArgs = ["--unhandled-rejections=warn", "--trace-warnings"];
-		const nodeArgs = [];
-
-		const serverPath = nova.path.join(
-			packageDir,
-			"node_modules/typescript-language-server/lib/cli.mjs",
-		);
+	getServerOptions(nodePath: string, packageDir: string): ServerOptions {
+		const args = [];
 
 		if (DEBUG_INSPECT) {
-			nodeArgs.push("--inspect-brk=9231", "--trace-warnings");
+			args.push("--inspect-brk=9231", "--trace-warnings");
 		}
 
-		if (debugPath) {
-			const stdinLog = nova.path.join(debugPath, "stdin.log");
-			const stdoutLog = nova.path.join(debugPath, "stdout.log");
-
-			const args = nodeArgs.join(" ");
-			const command = `${nodePath} ${args} "${serverPath}" --stdio`;
-
-			return {
-				type: "stdio",
-				path: "/bin/sh",
-				args: ["-c", `tee "${stdinLog}" | ${command} | tee "${stdoutLog}"`],
-			};
+		if (nova.config.get("robb-j.typescript.tsgo", "boolean")) {
+			args.push(
+				nova.path.join(
+					packageDir,
+					"node_modules/@typescript/native-preview/bin/tsgo.js",
+				),
+				"--lsp",
+				"--stdio",
+			);
+		} else {
+			args.push(
+				nova.path.join(
+					packageDir,
+					"node_modules/typescript-language-server/lib/cli.mjs",
+				),
+				"--stdio",
+			);
 		}
 
-		return {
-			type: "stdio",
-			path: nodePath,
-			args: [...nodeArgs, serverPath, "--stdio"],
-		};
+		return { type: "stdio", path: nodePath, args };
 	}
 }
